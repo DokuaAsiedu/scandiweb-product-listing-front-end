@@ -9,7 +9,6 @@ export function ProductCard({sku, name, price, type, measurements, selected, onC
 				checked={selected}
 				onChange={onChange} 
 			/>
-
 			<p>{sku}</p>
 			<p>{name}</p>
 			<p>{price} $</p>

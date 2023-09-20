@@ -12,7 +12,7 @@ export default function AddProductPage() {
 		sku: "",
 		name: "",
 		price: "",
-		// type: "",
+		productType: "",
 		// For DVD type
 		dvd_size: "",
 		// For Furniture type
@@ -29,7 +29,7 @@ export default function AddProductPage() {
 		setValue,
 		formState: { errors },
 	} = useForm({
-		defaultValues: initialValues
+		defaultValues: initialValues,
 	})
 
 	const productType = watch("productType")
@@ -44,10 +44,6 @@ export default function AddProductPage() {
 
 
 	const handleSave = (data) => {
-		// console.log(data);
-		// let newObj = Object.assign({}, data)
-		// console.log(newObj)
-
 		const { sku, name, price, productType, ...measurements } = data;
 
 		const payload = {
@@ -57,10 +53,9 @@ export default function AddProductPage() {
 			"productType": productType,
 			"measurements": measurements,
 		}
-		// console.log(payload)
 
 		axios.post(
-			"http://localhost:8000/add-product.php",// local hosting
+			"http://localhost:8000/routes/add-product.php",// local hosting
 			// "/server-files/add-product.php", // web hosting
 			payload,
 			{
@@ -68,8 +63,8 @@ export default function AddProductPage() {
 					'Content-Type': 'application/x-www-form-urlencoded'
 				}
 			}
-		).then(res => {
-			console.log(res.data);
+		).then(() => {
+			// console.log(res.data);
 			navigate("/");
 		}).catch(err => {
 			console.log(err);
@@ -79,7 +74,7 @@ export default function AddProductPage() {
 	async function checkSKU(sku) {
 		const query = { "sku": sku };
 		const res = await axios.post(
-			"http://localhost:8000/check-sku.php", // local hosting
+			"http://localhost:8000/routes/check-sku.php", // local hosting
 			// "/server-files/check-sku.php", // web hosting
 			query,
 			{
@@ -89,12 +84,7 @@ export default function AddProductPage() {
 			}
 		);
 		const data = await res.data;
-		console.log(data);
 		return !data || "SKU already exists";
-	}
-
-	const getErrors = (error) => {
-		console.log(error)
 	}
 
 	useEffect(() => {
@@ -119,11 +109,11 @@ export default function AddProductPage() {
 				</>
 			} />
 			<hr />
-			<form id="product_form" method="post" onSubmit={handleSubmit(handleSave, getErrors)} className="flex flex-column justify-start align-start">
+			<form id="product_form" method="post" onSubmit={handleSubmit(handleSave)} className="flex flex-column justify-start align-start">
 				<div className="flex flex-row justify-between align-start">
 					<label htmlFor="sku">SKU</label>
 					<div className="flex flex-column justify-between align-end input-block">
-						<input id="sku" {...register("sku", { required: true, validate: { sku_exists: checkSKU } })} type="text"></input>
+						<input id="sku" type="text" {...register("sku", { required: true, validate: { sku_exists: checkSKU } })}></input>
 						{errors.sku && errors.sku.type === "required" && <ErrorMessage message="This is required" />}
 						{errors.sku && <ErrorMessage message={errors.sku.message} />}
 					</div>
@@ -140,7 +130,7 @@ export default function AddProductPage() {
 				<div className="flex flex-row justify-between align-start">
 					<label htmlFor="price">Price ($)</label>
 					<div className="flex flex-column justify-between align-end input-block">
-						<input id="price" type="number" {...register("price", { required: true, min: 0, valueAsNumber: true })}></input>
+						<input id="price" type="number" step={0.01} {...register("price", { required: true, min: 0, valueAsNumber: true })}></input>
 						{errors.price && errors.price.type === "required" && (<ErrorMessage message="This is required" />)}
 						{errors.price && errors.price.type === "min" && (<ErrorMessage message="Please enter a number from 0" />)}
 						{errors.price && errors.price.type === "valueAsNumber" && (<ErrorMessage message="Please enter a number" />)}
