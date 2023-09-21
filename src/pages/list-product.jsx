@@ -10,10 +10,10 @@ export default function ListProductPage() {
 
 	useEffect(() => {
 		axios.get(
-			"http://localhost:8000/routes/fetch.php"// local hosting
-			// "/server-files/fetch.php", // web hosting
+			// "http://localhost:9000/routes/fetch.php"// local hosting
+			"/server-files/routes/fetch.php", // web hosting
 		).then(response => {
-			// console.log(response.data);
+			console.log(response.data);
 			setProductList(response.data);
 		}).catch(err => {
 			console.log(err)
@@ -41,18 +41,18 @@ export default function ListProductPage() {
 			const product = productList.find(product => product.sku === id);
 			return { "sku": product.sku, "type": product.type }
 		})
-		console.log(deleteTargets);
+		// console.log(deleteTargets);
 
 		axios.post(
-			"http://localhost:8000/routes/delete-products.php", // local hosting
-			// "/server-files/delete-products.php", // web hosting
+			// "http://localhost:9000/routes/delete-products.php", // local hosting
+			"/server-files/routes/delete-products.php", // web hosting
 			deleteTargets,
 			{
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
 				}
 			}).then(response => {
-				// console.log(response.data);
+				console.log(response.data);
 				setProductList(response.data);
 				setSelectedIds([])
 			}).catch(error => {

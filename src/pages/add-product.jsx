@@ -55,8 +55,8 @@ export default function AddProductPage() {
 		}
 
 		axios.post(
-			"http://localhost:8000/routes/add-product.php",// local hosting
-			// "/server-files/add-product.php", // web hosting
+			// "http://localhost:9000/routes/add-product.php",// local hosting
+			"/server-files/routes/add-product.php", // web hosting
 			payload,
 			{
 				headers: {
@@ -74,8 +74,8 @@ export default function AddProductPage() {
 	async function checkSKU(sku) {
 		const query = { "sku": sku };
 		const res = await axios.post(
-			"http://localhost:8000/routes/check-sku.php", // local hosting
-			// "/server-files/check-sku.php", // web hosting
+			// "http://localhost:9000/routes/check-sku.php", // local hosting
+			"/server-files/routes/check-sku.php", // web hosting
 			query,
 			{
 				headers: {

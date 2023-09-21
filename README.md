@@ -8,6 +8,6 @@ On the homepage, a stock of products with their corresponding properties are lis
 
 On the Product Add Page, the user can create a new product by setting its SKU (which should be unique), the name of the product, price, type of product and from that type, a field is generated so the user can set the dimensions of the product.
 
-The front end uses the ReactJS framework, the backend is PHP and the data is stored in a MySQL database.
+The front end uses the ReactJS framework, the backend is PHP and the data is stored in a MySQL database. The front end was configured to run on port 5173 and the backend on port 9000.
 
 This project is done to demonstrate basic skills needed for the Scandiweb Junior Web Developer role.
